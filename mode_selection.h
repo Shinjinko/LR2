@@ -1,0 +1,4 @@
+#ifndef LR2_FUNCTIONS_H
+#define LR2_MODE_SELECTION_H
+
+#endif //LR2_MODE_SELECTION_H
