@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "tasks.h"
-#include "functions.h"
 
 int main(int argc, char** argv)
 {
@@ -20,11 +19,11 @@ int main(int argc, char** argv)
         {
             case 1:
                 task = task1;
-                mode_selection(task, argv[2]);
+                task(argv[2]);
                 break;
             case 2:
                 task = task2;
-                mode_selection(task, argv[2]);
+                task(argv[2]);
                 break;
             case 0:
                 printf("Bye!");

@@ -32,26 +32,25 @@ void reverse(char *line, char* file_name, int line_size)
     fseek(file, line_size, SEEK_SET);
     for (int i = 0; i < word_count; i++)
     {
-        printf("\n");
+//        printf("\n");
         if (is_even_length(words[i]))
         {
             fwrite(words[indices[even]], strlen(words[indices[even]]), 1, file);
-            printf("word: |%s|", words[indices[even]]);
+//            printf("word: |%s|", words[indices[even]]);
             even--;
         }
         else
         {
             fwrite(words[i], strlen(words[i]), 1, file);
-            printf("word: |%s| ", words[i]);
+//            printf("word: |%s| ", words[i]);
         }
         if (i < word_count - 1) // Добавляем пробел после каждого слова, кроме последнего
         {
             fprintf(file, " ");
         }
-        printf("current word: |%s| ", words[i]);
+//        printf("current word: |%s| ", words[i]);
     }
     fclose(file);
-//    fprintf(file, "\n");
 }
 
 
@@ -59,15 +58,15 @@ void reverse(char *line, char* file_name, int line_size)
 void task2(char* file_name)
 {
     FILE *file = fopen(file_name, "r");
-    char line[81];
+    char line[10000];
     long int pos = 0;
-//    rewind(file);
+
     while (fgets(line, sizeof(line), file) != NULL)
     {
-        printf("%s\n", line);
+//        printf("%s\n", line);
         reverse(line, file_name, pos);
-        pos = ftell(file); // Получаем текущую позицию указателя файла
-        printf("\nposition of file: %li\n", pos);
+        pos = ftell(file);
+//        printf("\nposition of file: %li\n", pos);
     }
 
     fclose(file);
