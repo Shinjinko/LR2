@@ -1,7 +1,7 @@
 #include <stdio.h>
+#include <string.h>
 #include "tasks.h"
 #include "functions.h"
-
 
 void task1(char* file_name)
 {
@@ -33,7 +33,7 @@ int occurrences(char *file_name, char *word)
 
     while (fscanf(file, "%s", buffer) == 1)
     {
-        if (strCmp(buffer, word) == 0)
+        if (strcmp(buffer, word) == 0)
         {
             count++;
         }
@@ -42,19 +42,4 @@ int occurrences(char *file_name, char *word)
     fclose(file);
 
     return count;
-}
-
-
-int strCmp(const char *x, const char *y)
-{
-    while (*x)
-    {
-        if (*x != *y)
-           break;
-
-        x++;
-        y++;
-    }
-
-    return *(const unsigned char*)x - *(const unsigned char*)y;
 }

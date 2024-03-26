@@ -1,72 +1,100 @@
 #include <stdio.h>
 #include <string.h>
-#include "tasks.h"
+#include <ctype.h>
+#include "functions.h"
+#define DELIM " ,.+/вЂ”()\n?!"
 
-int is_even_length(char *word)
+int task2(char* file_name)
 {
-    return (strlen(word) % 2 == 0);
+    splitting_lines(file_name);
+    return 0;
 }
 
-void reverse(char *line, char* file_name, int line_size)
+void splitting_lines (char* file_name)
 {
     FILE *file = fopen(file_name, "r+");
+    char line[100] = "";
+    char separators[100] = "";
+    char* words[100];
+    int final_sequence[100];
+    int words_count = 0;
 
-    char *words[81];
-    int indices[81];
-    int word_count = 0;
-    int even = -1;
-
-    char *word = strtok(line, " \n");
-    while (word != NULL)
+    while (fgets(line, 100, file) != NULL)
     {
-        words[word_count] = word;
-        if (is_even_length(word))
-        {
-            even++;
-            indices[even] = word_count;
-        }
-        word_count++;
-        word = strtok(NULL, " \n");
-    }
 
-    fseek(file, line_size, SEEK_SET);
-    for (int i = 0; i < word_count; i++)
-    {
-//        printf("\n");
-        if (is_even_length(words[i]))
-        {
-            fwrite(words[indices[even]], strlen(words[indices[even]]), 1, file);
-//            printf("word: |%s|", words[indices[even]]);
-            even--;
-        }
-        else
-        {
-            fwrite(words[i], strlen(words[i]), 1, file);
-//            printf("word: |%s| ", words[i]);
-        }
-        if (i < word_count - 1) // Добавляем пробел после каждого слова, кроме последнего
-        {
-            fprintf(file, " ");
-        }
-//        printf("current word: |%s| ", words[i]);
+        process(line, separators, words, final_sequence, &words_count);
+
     }
+//    printf("\n%s", separators);
+
+    change_words (file_name, &words_count, words, final_sequence, separators);
+
+//    for(int i = 0; i < words_count; i++)
+//    {printf("%s ", words[i]);}
+
+
     fclose(file);
 }
 
-
-
-void task2(char* file_name)
+void process(char* line, char separators[], char* words[], int final_sequence[], int *words_count)
 {
-    FILE *file = fopen(file_name, "r");
-    char line[10000];
-    long int pos = 0;
+    char temp_line[100];
+    int static num;
+    strcpy(temp_line, line);
 
-    while (fgets(line, sizeof(line), file) != NULL)
+    char* token = strtok(temp_line, DELIM);
+    while (token != NULL && *words_count < 100)
     {
-//        printf("%s\n", line);
-        reverse(line, file_name, pos);
-        pos = ftell(file);
-//        printf("\nposition of file: %li\n", pos);
+        words[*words_count] = strdup(token);
+        final_sequence[*words_count] = *words_count;
+        char *found = strstr(line, words[*words_count]);
+        int index = found - line;
+        printf("%i %s ", *words_count, words[*words_count]);
+        memcpy(&line[index + 1], &line[index + strlen(words[*words_count])], sizeof(char) * strlen(line));
+//        printf("%d %s ", *words_count, words[*words_count]);
+        (*words_count)++;
+        token = strtok(NULL, DELIM);
+    }
+    strcat(separators, line);
+}
+
+void change_words (char* file_name, int *words_count, char* words[], int final_sequence[], char* separators)
+{
+    FILE *file = fopen(file_name, "r+");
+    words[*words_count] = "end";
+    int start = -1;
+    for(int i = 0; i <= *words_count; i++)
+    {
+        if (strlen(words[i]) % 2 == 0 && start == -1)
+        {
+            start = i;
+        }
+        if ((strlen(words[i]) % 2 != 0 && start != -1))
+        {
+            int ind = i - 1;
+            for(int y = start; y <= i - 1; y++)
+            {
+                final_sequence[y] = ind;
+                ind--;
+            }
+            start = -1;
+        }
+    }
+    printf("\n");
+    for(int i = 0; i < *words_count; i++)
+        printf("%i ", final_sequence[i]);
+
+    int y = 0;
+    rewind(file);
+    for(int i = 0; i < strlen(separators); i++)
+    {
+        if(isdigit(separators[i]) || isalnum(separators[i]) || separators[i] == '\'')
+        {
+            fprintf(file, "%s", words[final_sequence[y]]);
+            y++;
+        }
+        else
+            fprintf(file, "%c", separators[i]);
     }
 
     fclose(file);

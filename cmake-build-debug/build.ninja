@@ -73,6 +73,12 @@ build CMakeFiles/LR2.dir/task1.c.obj: C_COMPILER__LR2_Debug D$:/Proga/Tarasuk/2/
   OBJECT_DIR = CMakeFiles\LR2.dir
   OBJECT_FILE_DIR = CMakeFiles\LR2.dir
 
+build CMakeFiles/LR2.dir/task2(wrong).c.obj: C_COMPILER__LR2_Debug D$:/Proga/Tarasuk/2/LR2/task2(wrong).c || cmake_object_order_depends_target_LR2
+  DEP_FILE = CMakeFiles\LR2.dir\task2(wrong).c.obj.d
+  FLAGS = -g -fdiagnostics-color=always -std=gnu11
+  OBJECT_DIR = CMakeFiles\LR2.dir
+  OBJECT_FILE_DIR = CMakeFiles\LR2.dir
+
 build CMakeFiles/LR2.dir/task2.c.obj: C_COMPILER__LR2_Debug D$:/Proga/Tarasuk/2/LR2/task2.c || cmake_object_order_depends_target_LR2
   DEP_FILE = CMakeFiles\LR2.dir\task2.c.obj.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu11
@@ -87,7 +93,7 @@ build CMakeFiles/LR2.dir/task2.c.obj: C_COMPILER__LR2_Debug D$:/Proga/Tarasuk/2/
 #############################################
 # Link the executable LR2.exe
 
-build LR2.exe: C_EXECUTABLE_LINKER__LR2_Debug CMakeFiles/LR2.dir/main.c.obj CMakeFiles/LR2.dir/mode_selection.c.obj CMakeFiles/LR2.dir/write_in_file.c.obj CMakeFiles/LR2.dir/task1.c.obj CMakeFiles/LR2.dir/task2.c.obj
+build LR2.exe: C_EXECUTABLE_LINKER__LR2_Debug CMakeFiles/LR2.dir/main.c.obj CMakeFiles/LR2.dir/mode_selection.c.obj CMakeFiles/LR2.dir/write_in_file.c.obj CMakeFiles/LR2.dir/task1.c.obj CMakeFiles/LR2.dir/task2(wrong).c.obj CMakeFiles/LR2.dir/task2.c.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\LR2.dir
